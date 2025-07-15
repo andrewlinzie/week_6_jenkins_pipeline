@@ -1,22 +1,30 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('docker-hub')
+        DOCKER_IMAGE = 'andrewlinzie/week6-pipeline' // replace with your Docker Hub repo name
+    }
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Building...'
+                git 'https://github.com/andrewlinzie/week_6_jenkins_pipeline.git'
             }
         }
 
-        stage('Test') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Testing...'
+                sh 'docker build -t $DOCKER_IMAGE .'
             }
         }
 
-        stage('Deploy') {
+        stage('Push to Docker Hub') {
             steps {
-                echo 'Deploying...'
+                sh '''
+                    echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
+                    docker push $DOCKER_IMAGE
+                '''
             }
         }
     }
