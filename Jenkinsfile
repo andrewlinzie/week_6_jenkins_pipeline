@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub')
-        DOCKER_IMAGE = 'andrewlinzie/week6-pipeline'
-    }
+    DOCKERHUB_CREDENTIALS = credentials('docker-hub')
+    DOCKER_IMAGE = 'andrewlinzie1/andrewlinzie-week6-jenkins-pipeline'   // <‑‑ exact repo name
+}
 
     stages {
         stage('Build Docker Image') {
