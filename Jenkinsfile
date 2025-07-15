@@ -3,16 +3,10 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub')
-        DOCKER_IMAGE = 'andrewlinzie/week6-pipeline' // replace with your Docker Hub repo name
+        DOCKER_IMAGE = 'andrewlinzie/week6-pipeline'
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/andrewlinzie/week_6_jenkins_pipeline.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE .'
